@@ -1,0 +1,30 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url "https://maven.guardsquare.com" }
+        maven {
+            credentials {
+                username = "maven"
+                password = "${dexguardMavenToken}"
+            }
+            url "https://maven.guardsquare.com"
+            content { includeGroupByRegex "com\\.guardsquare.*" }
+            authentication { basic(BasicAuthentication) }
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "PocDexguard"
+include ':app'
+include ':main-module'
+include ':main-module:sdk'
+include ':shared'
+include ':shared:feature'
