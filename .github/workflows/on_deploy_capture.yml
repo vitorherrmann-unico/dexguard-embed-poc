@@ -1,0 +1,27 @@
+name: Gerar Tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      version_bump:
+        description: 'Qual versão deseja subir? Major - Minor - Patch'
+        required: true
+        default: 'Patch'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v2
+
+      - name: Verificar versão bump
+        run: |
+          if [[ ${{ github.event.inputs.version_bump }} == "Major" || ${{ github.event.inputs.version_bump }} == "minor" || ${{ github.event.inputs.version_bump }} == "Patch" ]]; then
+            echo "Opção válida selecionada."
+          else
+            echo "Opção inválida selecionada. Por favor, escolha entre Major, Minor ou Patch."
+            exit 1
+          fi
+
+      # Aqui você pode adicionar passos adicionais, como gerar a tag com base na opção selecionada.
