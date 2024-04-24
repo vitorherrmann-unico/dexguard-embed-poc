@@ -1,29 +1,32 @@
-name: Gerar Tag
+name: Create and Push Tag
 
 on:
   workflow_dispatch:
     inputs:
       version_bump:
-        description: 'Informe o número da versão'
+        description: 'Enter the version number'
         required: true
-        default: '5.'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Repository checkout
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Create tag
+      - name: Set up Git
+        run: |
+          git config --global user.name "Your Name"
+          git config --global user.email "youremail@example.com"
+
+      - name: Create Tag and Push
         env:
           TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
         run: |
           if [[ ${{ github.event.inputs.version_bump }} != "" ]]; then
-            echo ${{ github.event.inputs.version_bump }}
-          	git tag ${{ github.event.inputs.version_bump }}; \
+            git tag -a ${{ github.event.inputs.version_bump }} -m "Version ${{ github.event.inputs.version_bump }}"
             git push origin ${{ github.event.inputs.version_bump }};
           else
-            echo "Informe uma versão válida"
+            echo "Please provide a valid version number"
             exit 1
           fi
