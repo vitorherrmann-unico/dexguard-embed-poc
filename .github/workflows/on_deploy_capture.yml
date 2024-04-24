@@ -19,6 +19,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create tag
+        env:
+          TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
         run: |
           if [[ ${{ github.event.inputs.version_bump }} != "" ]]; then
             echo ${{ github.event.inputs.version_bump }}
