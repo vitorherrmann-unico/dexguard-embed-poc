@@ -8,6 +8,9 @@ on:
         required: true
         default: '5.'
 
+env:
+  TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,14 +19,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Create tag
-        env:
-          TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
         run: |
           if [[ ${{ github.event.inputs.version_bump }} != "" ]]; then
             echo ${{ github.event.inputs.version_bump }}
-            git fetch
-#          	git tag ${{ github.event.inputs.version_bump }}; \
-#            git push origin ${{ github.event.inputs.version_bump }};
+          	git tag ${{ github.event.inputs.version_bump }}; \
+            git push origin ${{ github.event.inputs.version_bump }};
           else
             echo "Informe uma versão válida"
             exit 1
