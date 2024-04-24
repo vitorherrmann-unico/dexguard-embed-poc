@@ -12,7 +12,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Verificar versão bump
+      - name: Repository checkout
+        uses: actions/checkout@v2
+
+      - name: Create tag
         run: |
           if [[ ${{ github.event.inputs.version_bump }} != "" ]]; then
             echo ${{ github.event.inputs.version_bump }}
