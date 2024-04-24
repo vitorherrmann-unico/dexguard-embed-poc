@@ -8,6 +8,9 @@ on:
         required: true
         default: '5.'
 
+env:
+  TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
