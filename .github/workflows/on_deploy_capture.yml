@@ -4,24 +4,20 @@ on:
   workflow_dispatch:
     inputs:
       version_bump:
-        description: 'Qual versão deseja subir? Major - Minor - Patch'
+        description: 'Informe o número da versão'
         required: true
-        default: 'Patch'
+        default: '5.'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v2
-
       - name: Verificar versão bump
         run: |
-          if [[ ${{ github.event.inputs.version_bump }} == "Major" || ${{ github.event.inputs.version_bump }} == "minor" || ${{ github.event.inputs.version_bump }} == "Patch" ]]; then
+          if [[ ${{ github.event.inputs.version_bump }} != "" || ${{ github.event.inputs.version_bump }} == "minor" || ${{ github.event.inputs.version_bump }} == "Patch" ]]; then
             echo "Opção válida selecionada."
+            echo ${{ github.event.inputs.version_bump }}
           else
-            echo "Opção inválida selecionada. Por favor, escolha entre Major, Minor ou Patch."
+            echo "Informe uma versão válida"
             exit 1
           fi
-
-      # Aqui você pode adicionar passos adicionais, como gerar a tag com base na opção selecionada.
