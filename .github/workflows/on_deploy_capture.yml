@@ -21,8 +21,9 @@ jobs:
         run: |
           if [[ ${{ github.event.inputs.version_bump }} != "" ]]; then
             echo ${{ github.event.inputs.version_bump }}
-          	git tag ${{ github.event.inputs.version_bump }}; \
-            git push origin ${{ github.event.inputs.version_bump }};
+            git fetch
+#          	git tag ${{ github.event.inputs.version_bump }}; \
+#            git push origin ${{ github.event.inputs.version_bump }};
           else
             echo "Informe uma versão válida"
             exit 1
