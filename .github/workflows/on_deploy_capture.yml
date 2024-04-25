@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version_bump:
-        description: 'Enter the version number'
+        description: 'Enter the version number:'
         required: true
 env:
   TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
@@ -18,9 +18,12 @@ jobs:
 
       - name: Create tag
         run: |
-          echo ${{ github.event.inputs.version_bump }}
-          git tag ${{ github.event.inputs.version_bump }}; \
+          CAPTURE_VERSION = "capture-sdk-${{ github.event.inputs.version_bump }}";
+          echo "CAPTURE_VERSION=${CAPTURE_VERSION}";
+          git tag ${CAPTURE_VERSION}; \
+          echo "Tag created successfully"
 
       - name: Push tag
         run: |
-          git push origin ${{ github.event.inputs.version_bump }};
+          git push origin ${CAPTURE_VERSION};;
+          echo "Tag pushed successfully"
